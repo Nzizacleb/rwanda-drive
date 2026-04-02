@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nziza Cleb">
+    <title>RwandaDrive | Designed by Nziza Cleb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --rwanda-blue: #00A1DE;
+            --rwanda-yellow: #FAD201;
+            --rwanda-green: #20603D;
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); color: var(--dark); }
+        
+        /* Navigation */
+        nav { background: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--rwanda-blue); }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: var(--dark); font-weight: 500; }
+
+        /* Hero */
+        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1350&q=80'); height: 50vh; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+
+        /* Grid */
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .price { color: var(--rwanda-green); font-weight: bold; font-size: 1.2rem; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: white; margin: 5% auto; padding: 30px; width: 80%; max-width: 600px; border-radius: 12px; position: relative; }
+        .close { position: absolute; right: 20px; top: 10px; font-size: 1.8rem; cursor: pointer; }
+
+        /* Purchase Steps */
+        .steps { background: #f0f7ff; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .btn { background: var(--rwanda-yellow); color: black; padding: 12px; border: none; width: 100%; font-weight: bold; cursor: pointer; border-radius: 5px; }
+
+        /* Credits Section */
+        .credits { text-align: center; padding: 20px; border-top: 1px solid #ddd; margin-top: 40px; }
+        .dev-badge { color: var(--rwanda-blue); font-weight: bold; }
+
+        footer { background: var(--dark); color: #ccc; text-align: center; padding: 30px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">RwandaDrive</div>
+        <div class="nav-links">
+            <a href="#inventory">Vehicles</a>
+            <a href="#help">Help Center</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Rwanda Automotive Marketplace</h1>
+        <p>Premium selection curated by <strong>Nziza Cleb</strong></p>
+    </header>
+
+    <div class="container" id="inventory">
+        <div class="grid">
+            <div class="card" onclick="openModal('Toyota Land Cruiser', '45,000,000 RWF', 'V8 Engine, Full Options, Kigali Plated')">
+                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=500&q=80" alt="Car">
+                <div class="card-content">
+                    <h3>Toyota Land Cruiser</h3>
+                    <p class="price">45,000,000 RWF</p>
+                </div>
+            </div>
+            
+            <div class="card" onclick="openModal('Yamaha YZF-R3', '4,200,000 RWF', 'Sports bike, 321cc, Brand New')">
+                <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=500&q=80" alt="Moto">
+                <div class="card-content">
+                    <h3>Yamaha Sports Bike</h3>
+                    <p class="price">4,200,000 RWF</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="help">
+        <div style="background: white; padding: 30px; border-radius: 10px;">
+            <h3>Help & Support</h3>
+            <p><strong>Buying Process:</strong> Click any vehicle to see the cost breakdown and reservation steps via MoMo.</p>
+            <p><strong>Verification:</strong> All vehicles are inspected for RRA compliance.</p>
+            <p class="dev-badge">Platform developed and maintained by Nziza Cleb.</p>
+        </div>
+    </div>
+
+    <div id="buyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Vehicle</h2>
+            <h3 id="modalPrice" style="color: var(--rwanda-green);">0 RWF</h3>
+            <p id="modalDesc"></p>
+            
+            <div class="steps">
+                <h4>How to Buy:</h4>
+                <p>1. <strong>Reserve:</strong> Pay 50k RWF via MoMo.</p>
+                <p>2. <strong>Inspect:</strong> Meet agent in Kigali for a test drive.</p>
+                <p>3. <strong>Complete:</strong> Transfer funds and sign RRA forms.</p>
+            </div><a href="https://wa.me/250789466735" target="_blank" style="text-decoration: none;">
+            <button class="btn">Chat with Nziza Cleb on WhatsApp</button>
+        </div>
+    </div>
+
+    <div class="credits">
+        <p>Project Lead & Developer: <br> <strong>Nziza Cleb</strong></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RwandaDrive Marketplace. All Rights Reserved.</p>
+        <p>System Design & Code by <strong>Nziza Cleb</strong></p>
+    </footer>
+
+    <script>
+        function openModal(title, price, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('buyModal').style.display = "block";
+        }
+        function closeModal() {
+            document.getElementById('buyModal').style.display = "none";
+        }
+        window.onclick = function(e) { if(e.target == document.getElementById('buyModal')) closeModal(); }
+    </script>
+</body>
+</html>
